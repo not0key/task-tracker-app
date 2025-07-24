@@ -1,4 +1,4 @@
-import type { ITask } from "@entities/task/model/types";
+import type { ITask } from "@entities/task/model/task.model";
 import { formatDate } from "@shared/lib";
 import { Card, CardContent, Typography, Box, Chip, Stack } from "@mui/material";
 import type { FC } from "react";

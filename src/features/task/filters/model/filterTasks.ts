@@ -1,4 +1,4 @@
-import type { ITask } from "../model/types";
+import type { ITask } from "../../../../entities/task/model/task.model";
 
 interface FilterOptions {
   search?: string;

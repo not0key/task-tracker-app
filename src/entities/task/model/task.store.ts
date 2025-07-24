@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { ITask } from "./types";
+import type { ITask } from "./task.model";
 
 interface TaskState {
   tasks: ITask[];
