@@ -1,3 +1,3 @@
-import { TaskPage } from "../pages/task-page/TaskPage";
+import { TaskPage } from "@pages/task-page";
 
 export const App = () => <TaskPage />;

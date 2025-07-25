@@ -1,8 +1,13 @@
+import type { FC } from "react";
 import { Grid } from "@mui/material";
 import { DragDropContext, type DropResult } from "@hello-pangea/dnd";
 import type { ITask } from "@entities/task";
-import { useTaskStore, TaskColumn } from "@entities/task";
-import type { FC } from "react";
+import {
+  useTaskStore,
+  TaskColumn,
+  getStatusLabel,
+  TASK_STATUSES,
+} from "@entities/task";
 
 interface ITaskBoardProps {
   tasks: ITask[];
@@ -26,17 +31,11 @@ export const TaskBoard: FC<ITaskBoardProps> = ({ tasks, onTaskSelect }) => {
         spacing={0}
         sx={{ flexWrap: "nowrap", overflowX: "auto", p: 4, gap: 3 }}
       >
-        {["todo", "in_progress", "ready"].map((status) => (
+        {TASK_STATUSES.map((status) => (
           <TaskColumn
             key={status}
             droppableId={status}
-            title={
-              status === "todo"
-                ? "К выполнению"
-                : status === "in_progress"
-                ? "В процессе"
-                : "Готово"
-            }
+            title={getStatusLabel(status)}
             tasks={tasks.filter((t) => t.status === status)}
             onSelect={onTaskSelect}
           />

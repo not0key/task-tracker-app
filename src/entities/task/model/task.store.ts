@@ -12,30 +12,44 @@ interface TaskState {
 
 export const useTaskStore = create<TaskState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       tasks: [],
+
       addTask: (task) => {
         const newTask: ITask = {
           ...task,
           id: crypto.randomUUID(),
           startDate: task.startDate || new Date().toISOString(),
         };
-        set({ tasks: [...get().tasks, newTask] });
+        set((state) => ({
+          tasks: [...state.tasks, newTask],
+        }));
       },
-      updateTask: (updated) => {
-        set({
-          tasks: get().tasks.map((t) => (t.id === updated.id ? updated : t)),
-        });
+
+      updateTask: (updatedTask) => {
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.id === updatedTask.id ? updatedTask : task
+          ),
+        }));
       },
+
       updateTaskStatus: (id, status) => {
-        set({
-          tasks: get().tasks.map((t) => (t.id === id ? { ...t, status } : t)),
-        });
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.id === id ? { ...task, status } : task
+          ),
+        }));
       },
+
       removeTask: (id) => {
-        set({ tasks: get().tasks.filter((t) => t.id !== id) });
+        set((state) => ({
+          tasks: state.tasks.filter((task) => task.id !== id),
+        }));
       },
     }),
-    { name: "task-storage" }
+    {
+      name: "user-tasks",
+    }
   )
 );

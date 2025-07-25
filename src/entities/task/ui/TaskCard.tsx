@@ -2,24 +2,12 @@ import type { ITask } from "@entities/task/model/task.model";
 import { formatDate } from "@shared/lib";
 import { Card, CardContent, Typography, Box, Chip, Stack } from "@mui/material";
 import type { FC } from "react";
+import { getStatusColor, getStatusLabel } from "../lib/taskStatusUtils";
 
 interface ITaskCardProps {
   task: ITask;
   onClick: () => void;
 }
-
-const getStatusColor = (status: ITask["status"]) => {
-  switch (status) {
-    case "todo":
-      return "default";
-    case "in_progress":
-      return "warning";
-    case "ready":
-      return "success";
-    default:
-      return "default";
-  }
-};
 
 export const TaskCard: FC<ITaskCardProps> = ({ task, onClick }) => (
   <Card
@@ -49,13 +37,7 @@ export const TaskCard: FC<ITaskCardProps> = ({ task, onClick }) => (
           {task.title}
         </Typography>
         <Chip
-          label={
-            task.status === "todo"
-              ? "К выполнению"
-              : task.status === "in_progress"
-              ? "В процессе"
-              : "Готово"
-          }
+          label={getStatusLabel(task.status)}
           color={getStatusColor(task.status)}
           size="small"
         />
@@ -73,11 +55,11 @@ export const TaskCard: FC<ITaskCardProps> = ({ task, onClick }) => (
 
       <Box sx={{ fontSize: 13, color: "text.secondary" }}>
         <Typography component="div">
-          Начало: {formatDate(task.startDate)}
+          Дата начала: {formatDate(task.startDate)}
         </Typography>
         {task.endDate && (
           <Typography component="div">
-            Завершение: {formatDate(task.endDate)}
+            Дата завершения: {formatDate(task.endDate)}
           </Typography>
         )}
       </Box>
